@@ -16,6 +16,18 @@ It provides a low-level client plus stateful conversations and automatic agent t
 uv pip install -e .
 ```
 
+For installing directly from GitHub with `uv`:
+
+```bash
+uv pip install git+https://github.com/PauWol/ARC-V2-Inference.git
+```
+
+For an editable GitHub install:
+
+```bash
+uv pip install -e git+https://github.com/PauWol/ARC-V2-Inference.git
+```
+
 ## Basic chat
 
 ```python
