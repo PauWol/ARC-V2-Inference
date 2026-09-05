@@ -23,15 +23,24 @@ class ToolExecutionError(InferenceError):
 class ToolCallIncompleteError(InferenceError):
     """Raised when the model starts a tool call but the server truncates it."""
 
-    def __init__(self, *, finish_reason: str | None, max_output_tokens: int, tool_name: str | None = None):
+    def __init__(
+        self,
+        *,
+        finish_reason: str | None,
+        max_output_tokens: int,
+        tool_name: str | None = None,
+        warning: str | None = None,
+    ):
         name = f" for tool {tool_name!r}" if tool_name else ""
         reason = finish_reason or "unknown"
+        detail = f" Server detail: {warning}" if warning else ""
         super().__init__(
             "The model started a tool call"
-            f"{name} but the response ended with finish_reason={reason!r}. "
+            f"{name} but the response ended with finish_reason={reason!r}.{detail} "
             f"Increase max_output_tokens (current: {max_output_tokens}) and verify the "
             "inference server's tool-call tag configuration matches the model."
         )
         self.finish_reason = finish_reason
         self.max_output_tokens = max_output_tokens
         self.tool_name = tool_name
+        self.warning = warning

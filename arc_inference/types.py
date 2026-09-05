@@ -43,7 +43,9 @@ class ChatMessage(BaseModel):
         return cls(role="assistant", content=content, **kwargs)
 
     @classmethod
-    def tool(cls, content: str, tool_call_id: str, name: str | None = None) -> "ChatMessage":
+    def tool(
+        cls, content: str, tool_call_id: str, name: str | None = None
+    ) -> "ChatMessage":
         return cls(role="tool", content=content, tool_call_id=tool_call_id, name=name)
 
 
@@ -89,6 +91,12 @@ class ChatResponse(BaseModel):
         return self.choices[0].get("finish_reason")
 
     @property
+    def warning(self) -> str | None:  # NEW
+        if not self.choices:
+            return None
+        return self.choices[0].get("warning")
+
+    @property
     def tool_calls(self) -> list[ToolCall]:
         message = self.message
         return message.tool_calls or [] if message else []
@@ -130,6 +138,7 @@ class StreamEvent:
     text: str = ""
     reasoning: str = ""
     tool_calls: list[ToolCall] = field(default_factory=list)
+    warning: str | None = None
     raw: Any = None
 
 
