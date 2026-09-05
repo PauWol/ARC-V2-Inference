@@ -138,6 +138,7 @@ class StreamEvent:
     text: str = ""
     reasoning: str = ""
     tool_calls: list[ToolCall] = field(default_factory=list)
+    finish_reason: str | None = None
     warning: str | None = None
     raw: Any = None
 

@@ -429,6 +429,7 @@ def _event_from_chunk(
         text=text,
         reasoning=reasoning,
         tool_calls=tool_calls,
+        finish_reason=finish_reason,
         warning=warning,
         raw=raw,
     )
