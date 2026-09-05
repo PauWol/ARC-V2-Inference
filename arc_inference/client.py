@@ -16,6 +16,7 @@ from .types import (
     CompletionResponse,
     EmbeddingResponse,
     ModelInfo,
+    ReasoningEffort,
     StreamEvent,
     ToolCall,
     ToolCallFunction,
@@ -69,6 +70,7 @@ class Chat:
         metadata: dict[str, Any] | None = None,
         tools: list[dict[str, Any]] | None = None,
         tool_choice: str | None = None,
+        reasoning_effort: ReasoningEffort | None = None,
         **extra: Any,
     ) -> ChatResponse | Iterator[StreamEvent]:
         payload = _chat_payload(
@@ -84,6 +86,7 @@ class Chat:
             metadata=metadata,
             tools=tools,
             tool_choice=tool_choice,
+            reasoning_effort=reasoning_effort,
             **extra,
         )
         if stream:
